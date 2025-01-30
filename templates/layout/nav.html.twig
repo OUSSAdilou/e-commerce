@@ -20,7 +20,13 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{{ path('app_category') }}">Catégories</a></li>
             <li><a class="dropdown-item" href="{{ path('app_category_new') }}">Ajouter une catégories</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_sub_category_index') }}">Sous catégories</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_sub_category_new') }}">créer un sous catégories</a></li>
             <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ path('app_produit_index') }}">Produits</a></li>
+            <li><a class="dropdown-item" href="{{ path('app_produit_new') }}">Créer un produit</a></li>
+            <li><hr class="dropdown-divider"></li>
+
             <li><a class="dropdown-item" href="{{ path('app_user') }}">Utilisateurs</a></li>
           </ul>
         </li>
@@ -33,6 +39,19 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      {% if is_granted ("IS_AUTHENTICATED_FULLY") %}
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ app.user.email }}
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{{ path('app_logout') }}">Deconnexion</a></li>
+        </ul>
+      </div>
+      {% else %}
+        <a class="btn btn-outline-primary" href="{{ path('app_login') }}">Connexion</a>
+        <a class="btn btn-outline-success" href="{{ path('app_register') }}">Inscription</a>
+      {% endif %}
     </div>
   </div>
 </nav>

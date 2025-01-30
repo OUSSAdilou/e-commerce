@@ -22,18 +22,18 @@
                 <td>{{ sub_category.name }}</td>
                 <td>{{ sub_category.category.nom }}</td>
                 <td>
-                    <a class="btn btn-outline-primary" href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">show</a>
-                    <a class="btn btn-outline-warning" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">edit</a>
+                    <a class="btn btn-outline-primary" href="{{ path('app_sub_category_show', {'id': sub_category.id}) }}">Voir</a>
+                    <a class="btn btn-outline-warning" href="{{ path('app_sub_category_edit', {'id': sub_category.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-outline-primary" href="{{ path('app_sub_category_new') }}">Create new</a>
+    <a class="btn btn-outline-primary" href="{{ path('app_sub_category_new') }}">Créer nouveau</a>
 </div>
 {% endblock %}
