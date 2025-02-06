@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class ProduitType extends AbstractType
+class ProduitUpdateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -19,7 +19,6 @@ class ProduitType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('prix')
-            ->add('stock')
             ->add('image', FileType::class, [
                 'label' => 'Image du produit',
                 'mapped' => false,
@@ -38,6 +37,7 @@ class ProduitType extends AbstractType
                     
                 ],
             ])
+            // ->add('stock')
             ->add('subCategories', EntityType::class, [
                 'class' => SubCategory::class,
                 'choice_label' => 'name',

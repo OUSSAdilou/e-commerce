@@ -16,7 +16,7 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -34,9 +34,19 @@ class Produit
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column]
+    private ?int $stock = null;
+
+    /**
+     * @var Collection<int, AjoutProduitHistorique>
+     */
+    #[ORM\OneToMany(targetEntity: AjoutProduitHistorique::class, mappedBy: 'produit')]
+    private Collection $ajoutProduitHistoriques;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
+        $this->ajoutProduitHistoriques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,4 +125,47 @@ class Produit
 
         return $this;
     }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AjoutProduitHistorique>
+     */
+    public function getAjoutProduitHistoriques(): Collection
+    {
+        return $this->ajoutProduitHistoriques;
+    }
+
+    public function addAjoutProduitHistorique(AjoutProduitHistorique $ajoutProduitHistorique): static
+    {
+        if (!$this->ajoutProduitHistoriques->contains($ajoutProduitHistorique)) {
+            $this->ajoutProduitHistoriques->add($ajoutProduitHistorique);
+            $ajoutProduitHistorique->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAjoutProduitHistorique(AjoutProduitHistorique $ajoutProduitHistorique): static
+    {
+        if ($this->ajoutProduitHistoriques->removeElement($ajoutProduitHistorique)) {
+            // set the owning side to null (unless already changed)
+            if ($ajoutProduitHistorique->getProduit() === $this) {
+                $ajoutProduitHistorique->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
