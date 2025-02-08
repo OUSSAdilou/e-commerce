@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Produits</h1>
 
+        <div class="card mb-12" style="margin-top: 70px">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ asset ('uploads/images/'~produit.image) }}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h1 class="card-title text-success">{{produit.nom}}</h1>
+                        <p class="card-text">{{produit.description}}</p>
+                        <h3>{{produit.prix}} $</h3>
+                        <a href="" class="text-success">Ajouter au panier</a>
+                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Derniers produits ajoutés</h2>
         <div class="row">
             {% for produit in produits %}
                 <div class="col-md-3" mt-4>
