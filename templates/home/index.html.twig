@@ -15,12 +15,14 @@
                             <a style="text-decoration: none; color: green;" href="{{path('app_home_produit_show',{'id':produit.id}) }}"><h5 class="card-title">{{produit.nom}}</h5></a>
                             <p class="card-text">{{produit.description|slice(0,60)}}...</p>
                             <h3>{{produit.prix}} $</h3>
-                            <a href="#" class="text-success">Ajouter au panier</a>
+                            <a href="{{path('app_cart_new',{'id':produit.id}) }}" class="text-success text-decoration-none">Ajouter au panier</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
+
+        {{ knp_pagination_render(produits, 'layout/pagination.html.twig' ) }}
     </div>
 
 {% endblock %}
