@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello OrderController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <h1>Commande</h1>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Continuer" class="btn btn-outline-primary">
+                {{ form_end(form) }}
+            </div>
+            <div class="col-4"><br><br><br><br>
+                <sapn>Montant à payer: <br></sapn>
+                <h2>
+                    <span id="card-price">{{ total }}</span>
+                    $
+                </h2>
+                <span>Frais de livraison</span>
+                <h2>
+                    <span id="shippingCost"></span>
+                    $
+                </h2>
+                <span>Montant total</span>
+                <h2>
+                    <span id="total-price"></span>
+                    $
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            const villeChoisis = $('#order_ville');
+            const fraisLivraison = villeChoisis.val();
+
+            const url = `http://127.0.0.1:8000/ville/${fraisLivraison}/shipping/cost`;
+            
+            function ajaxRequest(url){
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function (response){
+                        const newResponse = JSON.parse(response)
+                        if (parseInt(newResponse.status) === 200){
+                            // console.log(newResponse.status)
+                            $("#shippingCost").text(newResponse.content);
+
+                            const cardPrice = parseInt($("#card-price").text());
+                            const shippingCost = parseInt($("#shippingCost").text());
+
+                            $("#total-price").text(cardPrice + shippingCost);
+                            // console.log(cardPrice);
+                        }
+                        
+                    },
+                    error: function (xhr, status, error){
+
+                    }
+                    
+                })
+
+            }
+            ajaxRequest(url);
+
+            villeChoisis.on('change', function() {
+                const urlUpdate = `http://127.0.0.1:8000/ville/${$(this).val()}/shipping/cost`;
+                ajaxRequest(urlUpdate);
+            })
+        });
+    </script>
+{% endblock %} 

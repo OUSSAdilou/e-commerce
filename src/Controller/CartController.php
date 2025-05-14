@@ -12,6 +12,7 @@ class CartController extends AbstractController
 {
 
     public function __construct(private readonly ProduitRepository $produitRepository){}
+    // Gestion de panier
     #[Route('/cart', name: 'app_cart')]
     public function index(SessionInterface $session): Response
     {
@@ -37,6 +38,7 @@ class CartController extends AbstractController
         ]);
     }
 
+    // Supprimer un élément du panier
     #[Route('/cart/add/{id}', name: 'app_cart_new')]
     public function addToCart($id, SessionInterface $session): Response
     {
@@ -65,6 +67,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
+    // Vider le panier
     #[Route('/cart/remove', name: 'app_cart_remove')]
     public function removeAll(SessionInterface $session): Response
     {

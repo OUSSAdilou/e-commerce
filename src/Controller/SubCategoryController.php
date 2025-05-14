@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+// Liste des sous catégories
 #[Route('/sub/category')]
 final class SubCategoryController extends AbstractController
 {
@@ -22,6 +23,7 @@ final class SubCategoryController extends AbstractController
         ]);
     }
 
+    // Créer un sous catégorie
     #[Route('/new', name: 'app_sub_category_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -42,6 +44,7 @@ final class SubCategoryController extends AbstractController
         ]);
     }
 
+    // Voir un sous catégorie
     #[Route('/{id}', name: 'app_sub_category_show', methods: ['GET'])]
     public function show(SubCategory $subCategory): Response
     {
@@ -50,6 +53,7 @@ final class SubCategoryController extends AbstractController
         ]);
     }
 
+    // Modifier un sous catégorie
     #[Route('/{id}/edit', name: 'app_sub_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, SubCategory $subCategory, EntityManagerInterface $entityManager): Response
     {
@@ -68,6 +72,7 @@ final class SubCategoryController extends AbstractController
         ]);
     }
 
+    // Supprimer un sous catégorie
     #[Route('/{id}', name: 'app_sub_category_delete', methods: ['POST'])]
     public function delete(Request $request, SubCategory $subCategory, EntityManagerInterface $entityManager): Response
     {

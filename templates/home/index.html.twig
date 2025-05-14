@@ -8,9 +8,11 @@
 
         <div class="row">
             {% for produit in produits %}
-                <div class="col-md-3" mt-4>
+                <div class="col-md-3 mt-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{ asset ('uploads/images/'~produit.image) }}" class="card-img-top" alt="...">
+                        <a href="{{path('app_home_produit_show',{'id':produit.id}) }}">
+                            <img src="{{ asset ('uploads/images/'~produit.image) }}" class="card-img-top" alt="...">
+                        </a>
                         <div class="card-body">
                             <a style="text-decoration: none; color: green;" href="{{path('app_home_produit_show',{'id':produit.id}) }}"><h5 class="card-title">{{produit.nom}}</h5></a>
                             <p class="card-text">{{produit.description|slice(0,60)}}...</p>

@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+// Liste des produits
 #[Route('/editor/produit')]
 final class ProduitController extends AbstractController
 {
@@ -29,6 +30,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    // Créer un produit
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $sluggerInterface): Response
     {
@@ -74,6 +76,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    // Voir un produit
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
@@ -82,6 +85,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    // Modifier un produit
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager, SluggerInterface $sluggerInterface): Response
     {
@@ -119,6 +123,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    // Suprimer un produit
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
@@ -133,6 +138,7 @@ final class ProduitController extends AbstractController
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    // Ajouter le stock d'un produit
     #[Route('/add/produit/{id}/stock', name: 'app_produit_stock_add', methods: ['GET', 'POST'])]
     public function addStock($id, EntityManagerInterface $entityManager, Request $request, ProduitRepository $produitRepository): Response {
         $addStock = new AjoutProduitHistorique();
@@ -167,6 +173,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
+    // Voir l'hostorique du produit ajouté
     #[Route('/add/produit/{id}/stock/historique', name: 'app_produit_stock_add_historique', methods: ['GET', 'POST'])]
     public function produitAjoutHistorique($id, ProduitRepository $produitRepository, AjoutProduitHistoriqueRepository $ajoutProduitHistoriqueRepository):Response
     {

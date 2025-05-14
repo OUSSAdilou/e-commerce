@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CategoryController extends AbstractController
 {
+    // Liste des cayégories
     #[Route('/admin/category', name: 'app_category')]
     
     public function index(CategoryRepository $categoryRepository): Response
@@ -24,6 +25,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    // Créer une catégorie
     #[Route('/admin/category/new', name: 'app_category_new')]
     public function addCategory(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -43,6 +45,7 @@ class CategoryController extends AbstractController
         return$this->render('category/new.html.twig', ['form' => $form->createView()]);
     }
 
+    // Modifier un catégorie
     #[Route('/admin/category/{id}/update', name: 'app_category_update')]
     public function update(Category $category, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -62,6 +65,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    // Supprimer une catégorie
     #[Route('/admin/category/{id}/delete', name: 'app_category_delete')]
     public function delete(Category $category, EntityManagerInterface $entityManager, Request $request): Response
     {

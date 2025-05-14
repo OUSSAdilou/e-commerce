@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/editor/ville')]
 final class VilleController extends AbstractController
 {
+    // Liste des villes
     #[Route(name: 'app_ville_index', methods: ['GET'])]
     public function index(VilleRepository $villeRepository): Response
     {
@@ -22,6 +23,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    // Créer une ville
     #[Route('/new', name: 'app_ville_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -42,6 +44,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    // Voir une ville
     #[Route('/{id}', name: 'app_ville_show', methods: ['GET'])]
     public function show(Ville $ville): Response
     {
@@ -50,6 +53,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    // Modifier une ville
     #[Route('/{id}/edit', name: 'app_ville_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
     {
@@ -68,6 +72,7 @@ final class VilleController extends AbstractController
         ]);
     }
 
+    // Supprimer une ville
     #[Route('/{id}', name: 'app_ville_delete', methods: ['POST'])]
     public function delete(Request $request, Ville $ville, EntityManagerInterface $entityManager): Response
     {

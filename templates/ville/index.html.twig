@@ -6,34 +6,34 @@
    <div class="container">
        <h1>Liste des villes</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>FraisLivraison</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ville in villes %}
-            <tr>
-                <td>{{ ville.id }}</td>
-                <td>{{ ville.nom }}</td>
-                <td>{{ ville.fraisLivraison }}</td>
-                <td>
-                    <a class="btn btn-outline-info" href="{{ path('app_ville_show', {'id': ville.id}) }}">Voir</a>
-                    <a class="btn btn-outline-warning" href="{{ path('app_ville_edit', {'id': ville.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Aucune ville trouvée</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>FraisLivraison</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ville in villes %}
+                <tr>
+                    <td>{{ ville.id }}</td>
+                    <td>{{ ville.nom }}</td>
+                    <td>{{ ville.fraisLivraison }}</td>
+                    <td>
+                        <a class="btn btn-outline-info" href="{{ path('app_ville_show', {'id': ville.id}) }}">Voir</a>
+                        <a class="btn btn-outline-warning" href="{{ path('app_ville_edit', {'id': ville.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune ville trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a class="btn btn-outline-primary" href="{{ path('app_ville_new') }}">Créer nouneau</a>
+        <a class="btn btn-outline-primary" href="{{ path('app_ville_new') }}">Créer nouneau</a>
    </div>
 {% endblock %}

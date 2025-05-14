@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
+    // Liste des utilisateurs
     #[Route('/admin/user', name: 'app_user')]
     public function index(UserRepository $userRepository): Response
     {
@@ -20,6 +21,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // Donner le rôle éditeur à un utilisateur
     #[Route('/admin/user/{id}/to/editor', name: 'app_user_to_editor')]
     public function changeRole(EntityManagerInterface $entityManager, User $user):Response
     {
@@ -31,17 +33,19 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 
+    // Retirer le rôle éditeur à un utilisateur
     #[Route('/admin/user/{id}/remove/editor', name: 'app_user_remove_editor')]
     public function editorRoleRemove (EntityManagerInterface $entityManager, User $user):Response
     {
         $user->setRoles([]);
         $entityManager->flush();
 
-        $this->addFlash('danger', 'Le rôle editeur à été retirer à votre utilisateurs');
+        $this->addFlash('success', 'Le rôle editeur à été retirer à votre utilisateurs');
 
         return $this->redirectToRoute('app_user');
     }
 
+    // Supprimer un utilisateur
     #[Route('/admin/user/{id}/remove', name: 'app_user_remove')]
     public function removeUser(EntityManagerInterface $entityManager, $id, UserRepository $userRepository):Response
     {
