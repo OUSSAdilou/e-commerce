@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProduitRepository;
+use App\Service\Cart;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -14,27 +15,15 @@ class CartController extends AbstractController
     public function __construct(private readonly ProduitRepository $produitRepository){}
     // Gestion de panier
     #[Route('/cart', name: 'app_cart')]
-    public function index(SessionInterface $session): Response
+    public function index(SessionInterface $session, Cart $cart): Response
     {
-        $cart = $session->get('cart', []);
-        $cartWhitData = [];
-        foreach($cart as $id => $quantity){
-            $cartWhitData[] = [
-                'produit' => $this->produitRepository->find($id),
-                'quantity' => $quantity
-            ];
-        }
-
-        $total = array_sum(array_map(function ($item){
-            return $item['produit']->getPrix() * $item['quantity'];
-        }, $cartWhitData));
-
+       
+        $data = $cart->getCart($session);
         // dd($cartWhitData);
         // dd($total);
         return $this->render('cart/index.html.twig', [
-            'items'=>$cartWhitData,
-            'total' => $total,
-
+            'items'=>$data['cart'],
+            'total' => $data['total'],
         ]);
     }
 

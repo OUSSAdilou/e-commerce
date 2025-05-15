@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -31,6 +33,23 @@ class Order
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?bool $payerLivraison = null;
+
+    /**
+     * @var Collection<int, ProduitsCommander>
+     */
+    #[ORM\OneToMany(targetEntity: ProduitsCommander::class, mappedBy: '_order', orphanRemoval: true)]
+    private Collection $produitsCommanders;
+
+    #[ORM\Column]
+    private ?float $prixTotal = null;
+
+    public function __construct()
+    {
+        $this->produitsCommanders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +124,60 @@ class Order
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isPayerLivraison(): ?bool
+    {
+        return $this->payerLivraison;
+    }
+
+    public function setPayerLivraison(bool $payerLivraison): static
+    {
+        $this->payerLivraison = $payerLivraison;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProduitsCommander>
+     */
+    public function getProduitsCommanders(): Collection
+    {
+        return $this->produitsCommanders;
+    }
+
+    public function addProduitsCommander(ProduitsCommander $produitsCommander): static
+    {
+        if (!$this->produitsCommanders->contains($produitsCommander)) {
+            $this->produitsCommanders->add($produitsCommander);
+            $produitsCommander->setOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitsCommander(ProduitsCommander $produitsCommander): static
+    {
+        if ($this->produitsCommanders->removeElement($produitsCommander)) {
+            // set the owning side to null (unless already changed)
+            if ($produitsCommander->getOrder() === $this) {
+                $produitsCommander->setOrder(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrixTotal(): ?float
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(float $prixTotal): static
+    {
+        $this->prixTotal = $prixTotal;
 
         return $this;
     }

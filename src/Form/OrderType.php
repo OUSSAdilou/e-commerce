@@ -35,11 +35,16 @@ class OrderType extends AbstractType
                 ]
             ])
             ->add('ville', EntityType::class, [
+                'label' => 'Ville',
+                'placeholder' => 'Choisir une ville',
                 'class' => Ville::class,
                 'choice_label' => 'nom',
                 'attr'=>[
                     'class'=>'form form-control'
                 ]
+            ])
+            ->add('payerLivraison', null, [
+                'label' => 'Payer à la livraison',
             ])
         ;
     }
